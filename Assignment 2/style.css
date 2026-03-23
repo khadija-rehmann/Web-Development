@@ -1,0 +1,526 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3efe5;
+}
+
+.top-bar {
+    background-color: black;
+    padding: 10px 30px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.contact-icons img {
+    width: 25px;
+    height: 25px;
+}
+
+.top-right {
+    color: white;
+    display: flex;
+
+}
+
+.top-right img {
+    height: 20px;
+    margin: 15px;
+}
+
+.header {
+    background-color: black;
+    text-align: center;
+    padding: 3px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    color: rgb(179, 141, 54);
+    font-size: 54px;
+    letter-spacing: 3px;
+}
+
+.navbar {
+    background-color: black;
+    padding: 15px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Hamburger Icon */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    position: absolute;
+    left: 20px;
+    z-index: 1001;
+}
+
+.hamburger span {
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar a {
+    color: white;
+    margin: 25px;
+    text-decoration: none;
+}
+
+.navbar .sale {
+    color: red;
+}
+
+.banner-img img {
+    width: 100%;
+    height: 500px;
+}
+
+
+.section-title h2 {
+    font-size: 28px;
+    text-align: center;
+    letter-spacing: 2px;
+}
+.unstitched-section {
+    text-align: center;
+
+}
+
+.img-container{
+float: left; 
+width: 25%;
+box-sizing: border-box; 
+padding: 30px;
+}
+
+.ready-section {
+    padding: 60px 20px;
+    background-color: #d8cbb6;
+    text-align: center;
+}
+
+.ready-section h2 {
+    font-size: 24px;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.ready-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 30px;
+}
+
+.ready-item {
+    text-align: center;
+}
+
+.ready-item img {
+    width: 150px;
+    height: 150px;
+    border: 2px solid #ddd;
+}
+
+.ready-item p {
+    margin-top: 15px;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.fragrances-banner {
+    width: 100%;
+    height: 400px;
+}
+
+.fragrances-banner h2{
+    text-align: center;
+}
+.categories-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 20px;
+}
+
+
+.category-box img {
+    width: 100%;
+    height: 350px;
+}
+
+
+.accessories-section {
+    padding: 20px 20px;
+    background-color: rgb(233, 212, 194);
+    text-align: center;
+}
+
+.accessories-section h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.accessories-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+}
+
+.accessory-item {
+    text-align: center;
+}
+
+.accessory-item img {
+    width: 130px;
+    height: 130px;
+    border: 1px solid #ddd;
+}
+
+.accessory-item p {
+    margin-top: 15px;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.new-arrivals-section {
+    background-color: #efeae7;
+    text-align: center;
+}
+
+.new-arrivals-section h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.products {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 30px;
+}
+
+.product-card {
+    text-align: center;
+
+}
+
+
+.footer {
+    background-color: rgb(214, 172, 172);
+    padding: 30px;
+    text-align: center;
+}
+
+.footer p {
+    margin: 5px;
+    font-size: 12px;
+}
+
+@media screen and (max-width: 768px) {
+    
+    .top-bar {
+        padding: 8px 15px;
+        flex-wrap: wrap;
+    }
+
+    .contact-icons img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+
+    .top-right {
+        gap: 5px;
+    }
+
+    .top-right img {
+        height: 18px;
+        margin: 8px 5px;
+    }
+
+    .top-right h5 {
+        font-size: 12px;
+        margin: 8px 5px;
+    }
+
+    .logo {
+        font-size: 32px;
+        letter-spacing: 2px;
+    }
+
+    .hamburger {
+        display: flex;
+        position: absolute;
+        left: 20px;
+    }
+
+    .navbar {
+        padding: 15px;
+        flex-direction: column;
+        align-items: center;
+        min-height: 50px;
+        position: relative;
+        justify-content: center;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: left;
+        background-color: black;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .navbar a {
+        margin: 0;
+        padding: 15px 20px;
+        font-size: 16px;
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid #333;
+        text-align: left;
+    }
+
+    .navbar a:hover {
+        background-color: #333;
+    }
+
+    .banner-img img {
+        height: auto;
+        object-fit: cover;
+    }
+
+    .section-title h2 {
+        font-size: 22px;
+        padding: 10px;
+    }
+
+    .unstitched-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .img-container {
+        float: none;
+        width: 45%;
+        padding: 10px;
+    }
+
+    .img-container img {
+        width: 100%;
+        height: auto;
+    }
+
+    .img-container p {
+        font-size: 12px;
+    }
+
+    .ready-section {
+        padding: 30px 10px;
+    }
+
+    .ready-section h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .ready-items {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .ready-item {
+        width: 45%;
+    }
+
+    .ready-item img {
+        width: 100%;
+        height: auto;
+        max-width: 150px;
+    }
+
+    .ready-item p {
+        font-size: 11px;
+    }
+
+    .fragrances-banner {
+        height: auto;
+        padding: 20px 0;
+    }
+
+    .fragrances-banner h2 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .fragrances-banner img {
+        height: auto;
+    }
+
+    .categories-section {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 20px 10px;
+    }
+
+    .category-box {
+        width: 45%;
+    }
+
+    .category-box img {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        object-fit: cover;
+    }
+
+    .category-box p {
+        font-size: 13px;
+        margin-top: 8px;
+    }
+
+    .accessories-section {
+        padding: 30px 10px;
+    }
+
+    .accessories-section h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .accessories-items {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .accessory-item {
+        width: 45%;
+    }
+
+    .accessory-item img {
+        width: 100%;
+        height: auto;
+        max-width: 120px;
+    }
+
+    .accessory-item p {
+        font-size: 11px;
+    }
+
+    .new-arrivals-section {
+        padding: 30px 10px;
+    }
+
+    .new-arrivals-section h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .products {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .product-card {
+        width: 80%;
+        max-width: 300px;
+    }
+
+    .product-card img {
+        width: 100%;
+        height: auto;
+    }
+
+    .product-card h3 {
+        font-size: 16px;
+    }
+
+    .product-card .price {
+        font-size: 14px;
+    }
+
+    .footer {
+        padding: 20px 15px;
+    }
+
+    .footer h3 {
+        font-size: 16px;
+    }
+
+    .footer p {
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    
+    .img-container {
+        width: 90%;
+    }
+
+    .ready-item {
+        width: 45%;
+    }
+
+    .category-box {
+        width: 90%;
+    }
+
+    .accessory-item {
+        width: 45%;
+    }
+
+    .product-card {
+        width: 90%;
+    }
+
+    .navbar a {
+        margin: 8px;
+        font-size: 12px;
+    }
+
+    .logo {
+        font-size: 28px;
+    }
+
+    .top-right h5 {
+        display: none;
+    }
+}
