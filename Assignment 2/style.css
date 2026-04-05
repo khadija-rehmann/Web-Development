@@ -21,7 +21,6 @@ body {
 .top-right {
     color: white;
     display: flex;
-
 }
 
 .top-right img {
@@ -33,10 +32,6 @@ body {
     background-color: black;
     text-align: center;
     padding: 3px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .logo {
@@ -49,32 +44,22 @@ body {
     background-color: black;
     padding: 15px;
     text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* Hamburger Icon */
-.hamburger {
+.menu-btn {
     display: none;
-    flex-direction: column;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    font-size: 22px;
+    padding: 6px 10px;
     cursor: pointer;
-    position: absolute;
-    left: 20px;
-    z-index: 1001;
-}
-
-.hamburger span {
-    width: 30px;
-    height: 3px;
-    background-color: white;
-    margin: 4px 0;
-    transition: 0.3s;
-    border-radius: 2px;
 }
 
 .nav-links {
@@ -83,13 +68,14 @@ body {
     align-items: center;
 }
 
-.navbar a {
+.nav-links a {
     color: white;
     margin: 25px;
     text-decoration: none;
+    display: inline-block;
 }
 
-.navbar .sale {
+.nav-links .sale {
     color: red;
 }
 
@@ -174,41 +160,6 @@ padding: 30px;
 }
 
 
-.accessories-section {
-    padding: 20px 20px;
-    background-color: rgb(233, 212, 194);
-    text-align: center;
-}
-
-.accessories-section h2 {
-    font-size: 28px;
-    margin-bottom: 40px;
-    letter-spacing: 2px;
-}
-
-.accessories-items {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 40px;
-}
-
-.accessory-item {
-    text-align: center;
-}
-
-.accessory-item img {
-    width: 130px;
-    height: 130px;
-    border: 1px solid #ddd;
-}
-
-.accessory-item p {
-    margin-top: 15px;
-    font-size: 12px;
-    letter-spacing: 1px;
-}
-
 .new-arrivals-section {
     background-color: #efeae7;
     text-align: center;
@@ -244,11 +195,80 @@ padding: 30px;
     font-size: 12px;
 }
 
-@media screen and (max-width: 768px) {
-    
+@media (max-width: 1024px) {
+    .logo {
+        font-size: 40px;
+        letter-spacing: 2px;
+    }
+
+    .navbar {
+        padding: 10px 16px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .menu-btn {
+        display: block;
+        align-self: flex-end;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: stretch;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        width: 100%;
+    }
+
+    .navbar.open .nav-links,
+    .nav-links.active {
+        max-height: 260px;
+        margin-top: 10px;
+    }
+
+    .nav-links a {
+        margin: 0;
+        padding: 12px;
+        font-size: 14px;
+        border-top: 1px solid #2b2b2b;
+    }
+
+    .banner-img img {
+        height: 350px;
+    }
+
+    .img-container {
+        width: 33.33%;
+        padding: 20px;
+    }
+
+    .ready-item img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .ready-items {
+        gap: 20px;
+    }
+
+    .categories-section {
+        gap: 15px;
+    }
+
+    .category-box img {
+        height: 250px;
+    }
+
+    .products {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
     .top-bar {
         padding: 8px 15px;
-        flex-wrap: wrap;
+        flex-direction: row;
     }
 
     .contact-icons img {
@@ -263,83 +283,55 @@ padding: 30px;
 
     .top-right img {
         height: 18px;
-        margin: 8px 5px;
+        margin: 5px;
     }
 
     .top-right h5 {
+        margin: 5px;
         font-size: 12px;
-        margin: 8px 5px;
+    }
+
+    .header {
+        padding: 2px;
     }
 
     .logo {
-        font-size: 32px;
-        letter-spacing: 2px;
-    }
-
-    .hamburger {
-        display: flex;
-        position: absolute;
-        left: 20px;
+        font-size: 28px;
+        letter-spacing: 1px;
     }
 
     .navbar {
-        padding: 15px;
-        flex-direction: column;
-        align-items: center;
-        min-height: 50px;
-        position: relative;
-        justify-content: center;
+        padding: 10px 12px;
     }
 
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        text-align: left;
-        background-color: black;
-        padding: 0;
-        margin: 0;
+    .menu-btn {
+        font-size: 20px;
+        padding: 5px 9px;
     }
 
-    .nav-links.active {
-        display: flex;
-    }
-
-    .navbar a {
-        margin: 0;
-        padding: 15px 20px;
-        font-size: 16px;
-        display: block;
-        width: 100%;
-        border-bottom: 1px solid #333;
-        text-align: left;
-    }
-
-    .navbar a:hover {
-        background-color: #333;
+    .nav-links a {
+        padding: 14px 10px;
+        font-size: 14px;
     }
 
     .banner-img img {
-        height: auto;
-        object-fit: cover;
+        height: 250px;
     }
 
     .section-title h2 {
-        font-size: 22px;
-        padding: 10px;
+        font-size: 20px;
+        letter-spacing: 1px;
     }
 
     .unstitched-section {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 10px;
+        text-align: center;
     }
 
     .img-container {
-        float: none;
-        width: 45%;
-        padding: 10px;
+        float: left;
+        width: 50%;
+        box-sizing: border-box;
+        padding: 15px;
     }
 
     .img-container img {
@@ -349,118 +341,99 @@ padding: 30px;
 
     .img-container p {
         font-size: 12px;
+        margin-top: 8px;
     }
 
     .ready-section {
-        padding: 30px 10px;
+        padding: 30px 15px;
     }
 
     .ready-section h2 {
-        font-size: 20px;
+        font-size: 18px;
         margin-bottom: 20px;
+        letter-spacing: 1px;
     }
 
     .ready-items {
+        flex-direction: row;
         flex-wrap: wrap;
         gap: 15px;
+        justify-content: center;
     }
 
     .ready-item {
-        width: 45%;
+        flex: 0 1 calc(50% - 10px);
     }
 
     .ready-item img {
         width: 100%;
-        height: auto;
-        max-width: 150px;
+        max-width: 120px;
+        height: 120px;
     }
 
     .ready-item p {
+        margin-top: 10px;
         font-size: 11px;
+        letter-spacing: 0.5px;
     }
 
     .fragrances-banner {
         height: auto;
-        padding: 20px 0;
-    }
-
-    .fragrances-banner h2 {
-        font-size: 22px;
-        margin-bottom: 15px;
     }
 
     .fragrances-banner img {
-        height: auto;
+        width: 100%;
+        height: 200px;
+    }
+
+    .fragrances-banner h2 {
+        font-size: 18px;
+        margin: 15px 0;
     }
 
     .categories-section {
+        flex-direction: row;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 10px;
         padding: 20px 10px;
     }
 
     .category-box {
-        width: 45%;
+        flex: 0 1 calc(50% - 5px);
     }
 
     .category-box img {
         width: 100%;
         height: auto;
-        max-height: 200px;
-        object-fit: cover;
+        min-height: 150px;
     }
 
     .category-box p {
-        font-size: 13px;
-        margin-top: 8px;
-    }
-
-    .accessories-section {
-        padding: 30px 10px;
-    }
-
-    .accessories-section h2 {
-        font-size: 22px;
-        margin-bottom: 20px;
-    }
-
-    .accessories-items {
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-
-    .accessory-item {
-        width: 45%;
-    }
-
-    .accessory-item img {
-        width: 100%;
-        height: auto;
-        max-width: 120px;
-    }
-
-    .accessory-item p {
         font-size: 11px;
+        margin-top: 8px;
+        letter-spacing: 0.5px;
     }
 
     .new-arrivals-section {
-        padding: 30px 10px;
+        padding: 20px 10px;
     }
 
     .new-arrivals-section h2 {
-        font-size: 22px;
+        font-size: 20px;
         margin-bottom: 20px;
+        letter-spacing: 1px;
     }
 
     .products {
         flex-direction: column;
         align-items: center;
         gap: 20px;
+        padding: 0 15px;
     }
 
     .product-card {
-        width: 80%;
-        max-width: 300px;
+        width: 100%;
+        max-width: 250px;
     }
 
     .product-card img {
@@ -469,11 +442,13 @@ padding: 30px;
     }
 
     .product-card h3 {
-        font-size: 16px;
+        font-size: 14px;
+        margin: 10px 0 5px 0;
     }
 
     .product-card .price {
-        font-size: 14px;
+        font-size: 12px;
+        margin-bottom: 15px;
     }
 
     .footer {
@@ -482,45 +457,11 @@ padding: 30px;
 
     .footer h3 {
         font-size: 16px;
+        margin-bottom: 10px;
     }
 
     .footer p {
+        margin: 4px;
         font-size: 11px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    
-    .img-container {
-        width: 90%;
-    }
-
-    .ready-item {
-        width: 45%;
-    }
-
-    .category-box {
-        width: 90%;
-    }
-
-    .accessory-item {
-        width: 45%;
-    }
-
-    .product-card {
-        width: 90%;
-    }
-
-    .navbar a {
-        margin: 8px;
-        font-size: 12px;
-    }
-
-    .logo {
-        font-size: 28px;
-    }
-
-    .top-right h5 {
-        display: none;
     }
 }
