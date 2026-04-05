@@ -7,21 +7,20 @@ body {
 .top-bar {
     background-color: black;
     padding: 10px 30px;
-    justify-content: space-between;
+    justify-content:space-between;
     display: flex;
     flex-direction: row;
 }
 
-
 .contact-icons img {
     width: 25px;
     height: 25px;
+    margin: 15px;
 }
 
 .top-right {
     color: white;
     display: flex;
-
 }
 
 .top-right img {
@@ -32,7 +31,7 @@ body {
 .header {
     background-color: black;
     text-align: center;
-    padding: 3px;
+    padding: 8px;
 }
 
 .logo {
@@ -45,7 +44,6 @@ body {
     background-color: black;
     padding: 15px;
     text-align: center;
-    
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -71,9 +69,9 @@ body {
     text-align: center;
     letter-spacing: 2px;
 }
+
 .unstitched-section {
     text-align: center;
-
 }
 
 .img-container{
@@ -84,7 +82,7 @@ padding: 30px;
 }
 
 .ready-section {
-    padding: 60px 20px;
+    padding: 30px 20px;
     background-color: #d8cbb6;
     text-align: center;
 }
@@ -102,9 +100,6 @@ padding: 30px;
     gap: 30px;
 }
 
-.ready-item {
-    text-align: center;
-}
 
 .ready-item img {
     width: 150px;
@@ -126,10 +121,12 @@ padding: 30px;
 .fragrances-banner h2{
     text-align: center;
 }
+
 .categories-section {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    text-align: center;
     gap: 20px;
     padding: 40px 20px;
 }
@@ -141,50 +138,15 @@ padding: 30px;
 }
 
 
-.accessories-section {
-    padding: 20px 20px;
-    background-color: rgb(233, 212, 194);
-    text-align: center;
-}
-
-.accessories-section h2 {
-    font-size: 28px;
-    margin-bottom: 40px;
-    letter-spacing: 2px;
-}
-
-.accessories-items {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 40px;
-}
-
-.accessory-item {
-    text-align: center;
-}
-
-.accessory-item img {
-    width: 130px;
-    height: 130px;
-    border: 1px solid #ddd;
-}
-
-.accessory-item p {
-    margin-top: 15px;
-    font-size: 12px;
-    letter-spacing: 1px;
-}
-
 .new-arrivals-section {
     background-color: #efeae7;
-    text-align: center;
 }
 
 .new-arrivals-section h2 {
     font-size: 28px;
     margin-bottom: 40px;
     letter-spacing: 2px;
+    text-align: center;
 }
 
 .products {
@@ -196,7 +158,6 @@ padding: 30px;
 
 .product-card {
     text-align: center;
-
 }
 
 
