@@ -1,38 +1,15 @@
-function toggleMenu() {
-    var navLinks = document.getElementById("navLinks");
+var menuBtn = document.getElementById("menuBtn");
+var navLinks = document.getElementById("navLinks");
+var menuLinks = document.querySelectorAll("#navLinks a");
 
-    if (!navLinks) {
-        console.warn("#navLinks not found");
-        return;
-    }
-
+menuBtn.addEventListener("click", function () {
     navLinks.classList.toggle("active");
+});
+
+for (var i = 0; i < menuLinks.length; i++) {
+    menuLinks[i].addEventListener("click", function () {
+        if (window.innerWidth <= 1024) {
+            navLinks.classList.remove("active");
+        }
+    });
 }
-
-function closeMenu() {
-    var navLinks = document.getElementById("navLinks");
-
-    if (!navLinks) {
-        return;
-    }
-
-    navLinks.classList.remove("active");
-}
-
-function bindings() {
-    var hamburger = document.getElementById("hamburger");
-    var menuLinks = document.querySelectorAll(".nav-links a");
-
-    if (hamburger) {
-        hamburger.addEventListener("click", toggleMenu);
-        console.log("Bound #hamburger click to toggleMenu");
-    } else {
-        console.warn("#hamburger not found - menu toggle not bound");
-    }
-
-    for (var i = 0; i < menuLinks.length; i++) {
-        menuLinks[i].addEventListener("click", closeMenu);
-    }
-}
-
-window.onload = bindings;
