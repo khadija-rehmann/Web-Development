@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hobbies</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="header">
+    <h1 class="logo">LIMELIGHT</h1>
+  </div>
+
+  <div class="navbar">
+    <div class="nav-links active" id="navLinks">
+      <a href="/">HOME</a>
+      <a href="/contact-us">CONTACT US</a>
+      <a href="/hobbies">HOBBIES</a>
+    </div>
+  </div>
+
+  <div class="new-arrivals-section" style="padding: 40px 20px; min-height: 60vh;">
+    <h2>MY HOBBIES</h2>
+    <% hobbies.forEach(function(hobby) { %>
+      <p><%= hobby %></p>
+    <% }); %>
+  </div>
+
+  <div class="footer">
+    <h3><b>CUSTOMER CARE</b></h3>
+    <p>Thank you for visiting.</p>
+  </div>
+</body>
+</html>
