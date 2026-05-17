@@ -1,0 +1,484 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3efe5;
+}
+
+.top-bar {
+    background-color: black;
+    padding: 10px 30px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.contact-icons img {
+    width: 25px;
+    height: 25px;
+}
+
+.top-right {
+    color: white;
+    display: flex;
+}
+
+.top-right img {
+    height: 20px;
+    margin: 15px;
+}
+
+.header {
+    background-color: black;
+    text-align: center;
+    padding: 3px;
+}
+
+.logo {
+    color: rgb(179, 141, 54);
+    font-size: 54px;
+    letter-spacing: 3px;
+}
+
+.navbar {
+    /* Keep horizontal desktop navigation centered and sticky */
+    background-color: black;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.menu-btn {
+    /* Hidden on desktop, visible on tablet/mobile via media query */
+    display: none;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    font-size: 22px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.nav-links {
+    /* Desktop layout: horizontal links */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-links a {
+    color: white;
+    margin: 0 22px;
+    padding: 8px 2px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+}
+
+.nav-links .sale {
+    color: red;
+}
+
+.banner-img img {
+    width: 100%;
+    height: 500px;
+}
+
+
+.section-title h2 {
+    font-size: 28px;
+    text-align: center;
+    letter-spacing: 2px;
+}
+.unstitched-section {
+    text-align: center;
+
+}
+
+.img-container{
+float: left; 
+width: 25%;
+box-sizing: border-box; 
+padding: 30px;
+}
+
+.ready-section {
+    padding: 60px 20px;
+    background-color: #d8cbb6;
+    text-align: center;
+}
+
+.ready-section h2 {
+    font-size: 24px;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.ready-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 30px;
+}
+
+.ready-item {
+    text-align: center;
+}
+
+.ready-item img {
+    width: 150px;
+    height: 150px;
+    border: 2px solid #ddd;
+}
+
+.ready-item p {
+    margin-top: 15px;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.fragrances-banner {
+    width: 100%;
+    height: 400px;
+}
+
+.fragrances-banner h2{
+    text-align: center;
+}
+.categories-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px 20px;
+}
+
+
+.category-box img {
+    width: 100%;
+    height: 350px;
+}
+
+
+.new-arrivals-section {
+    background-color: #efeae7;
+    text-align: center;
+}
+
+.new-arrivals-section h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.products {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 30px;
+}
+
+.product-card {
+    text-align: center;
+
+}
+
+
+.footer {
+    background-color: rgb(214, 172, 172);
+    padding: 30px;
+    text-align: center;
+}
+
+.footer p {
+    margin: 5px;
+    font-size: 12px;
+}
+
+@media (max-width: 1024px) {
+    /* Tablet and mobile: replace horizontal links with hamburger menu */
+    .logo {
+        font-size: 40px;
+        letter-spacing: 2px;
+    }
+
+    .navbar {
+        padding: 10px 16px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .menu-btn {
+        display: block;
+        align-self: flex-start;
+        min-width: 42px;
+        min-height: 42px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: stretch;
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        overflow: hidden;
+        transition: max-height 0.35s ease, opacity 0.25s ease, transform 0.25s ease;
+        width: 100%;
+    }
+
+    .nav-links.active {
+        max-height: 320px;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+        margin-top: 10px;
+    }
+
+    .nav-links a {
+        margin: 0;
+        padding: 14px 12px;
+        font-size: 15px;
+        border-top: 1px solid #2b2b2b;
+        text-align: left;
+    }
+
+    .banner-img img {
+        height: 350px;
+    }
+
+    .img-container {
+        width: 33.33%;
+        padding: 20px;
+    }
+
+    .ready-item img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .ready-items {
+        gap: 20px;
+    }
+
+    .categories-section {
+        gap: 15px;
+    }
+
+    .category-box img {
+        height: 250px;
+    }
+
+    .products {
+        gap: 20px;
+    }
+}
+
+/* mobile view */
+@media (max-width: 768px) {
+    /* Top Bar */
+    .top-bar {
+        padding: 8px 15px;
+        flex-direction: row;
+    }
+
+    .contact-icons img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+
+    .top-right {
+        gap: 5px;
+    }
+
+    .top-right img {
+        height: 18px;
+        margin: 5px;
+    }
+
+    .top-right h5 {
+        margin: 5px;
+        font-size: 12px;
+    }
+
+    /* Header & Logo */
+    .header {
+        padding: 2px;
+    }
+
+    .logo {
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+
+    .navbar {
+        padding: 10px 12px;
+    }
+
+    .menu-btn {
+        font-size: 20px;
+        padding: 5px 9px;
+    }
+
+    .nav-links a {
+        padding: 14px 10px;
+        font-size: 14px;
+    }
+
+    .banner-img img {
+        height: 250px;
+    }
+
+    .section-title h2 {
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+
+    .unstitched-section {
+        text-align: center;
+    }
+
+    .img-container {
+        float: left;
+        width: 50%;
+        box-sizing: border-box;
+        padding: 15px;
+    }
+
+    .img-container img {
+        width: 100%;
+        height: auto;
+    }
+
+    .img-container p {
+        font-size: 12px;
+        margin-top: 8px;
+    }
+
+    .ready-section {
+        padding: 30px 15px;
+    }
+
+    .ready-section h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    .ready-items {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .ready-item {
+        flex: 0 1 calc(50% - 10px);
+    }
+
+    .ready-item img {
+        width: 100%;
+        max-width: 120px;
+        height: 120px;
+    }
+
+    .ready-item p {
+        margin-top: 10px;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+
+    .fragrances-banner {
+        height: auto;
+    }
+
+    .fragrances-banner img {
+        width: 100%;
+        height: 200px;
+    }
+
+    .fragrances-banner h2 {
+        font-size: 18px;
+        margin: 15px 0;
+    }
+
+    .categories-section {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 20px 10px;
+    }
+
+    .category-box {
+        flex: 0 1 calc(50% - 5px);
+    }
+
+    .category-box img {
+        width: 100%;
+        height: auto;
+        min-height: 150px;
+    }
+
+    .category-box p {
+        font-size: 11px;
+        margin-top: 8px;
+        letter-spacing: 0.5px;
+    }
+
+    .new-arrivals-section {
+        padding: 20px 10px;
+    }
+
+    .new-arrivals-section h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    .products {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 0 15px;
+    }
+
+    .product-card {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .product-card img {
+        width: 100%;
+        height: auto;
+    }
+
+    .product-card h3 {
+        font-size: 14px;
+        margin: 10px 0 5px 0;
+    }
+
+    .product-card .price {
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+
+    .footer {
+        padding: 20px 15px;
+    }
+
+    .footer h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .footer p {
+        margin: 4px;
+        font-size: 11px;
+    }
+}
