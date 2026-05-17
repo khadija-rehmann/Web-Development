@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products - Limelight</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .filter-bar {
+            background-color: #d8cbb6;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+        }
+
+        .filter-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 10px;
+            border: 1px solid #999;
+            border-radius: 3px;
+            font-size: 13px;
+            font-family: Arial, sans-serif;
+        }
+
+        .filter-group input::placeholder {
+            color: #999;
+        }
+
+        .apply-btn {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .apply-btn:hover {
+            background-color: #333;
+        }
+
+        .page-heading {
+            text-align: center;
+            margin: 40px 20px 20px;
+        }
+
+        .page-heading h1 {
+            font-size: 32px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .product-count {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 50px;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            min-height: 40px;
+        }
+
+        .product-card .price {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .product-card .rating {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .product-card .stock {
+            font-size: 12px;
+            color: #999;
+            margin-top: 3px;
+        }
+
+        .add-to-cart-form {
+            margin-top: 10px;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            background: black;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 1px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 3px;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #333;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 18px;
+            color: #666;
+        }
+
+        .pagination-container {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 0 20px;
+        }
+
+        .pagination {
+            display: inline-flex;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .pagination a,
+        .pagination span {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            text-decoration: none;
+            color: black;
+            border-radius: 3px;
+            font-size: 13px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination a:hover {
+            background-color: #f3efe5;
+        }
+
+        .pagination .active {
+            background-color: rgb(179, 141, 54);
+            color: white;
+            border-color: rgb(179, 141, 54);
+        }
+
+        .pagination .disabled {
+            color: #ccc;
+            cursor: not-allowed;
+            border-color: #ddd;
+        }
+
+        .pagination .disabled:hover {
+            background-color: transparent;
+        }
+
+        @media (max-width: 1024px) {
+            .filter-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+
+            .product-card img {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .filter-bar {
+                padding: 20px 15px;
+            }
+
+            .filter-container {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .apply-btn {
+                width: 100%;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 0 15px;
+            }
+
+            .product-card img {
+                height: 200px;
+            }
+
+            .page-heading h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-card img {
+                height: 250px;
+            }
+
+            .page-heading h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <% 
+        const searchValue = typeof search === "string" ? search : "";
+        const categoryValue = typeof category === "string" ? category : "";
+        const minPriceValue = typeof minPrice !== "undefined" ? minPrice : "";
+        const maxPriceValue = typeof maxPrice !== "undefined" ? maxPrice : "";
+        const sortValue = typeof sort === "string" ? sort : "newest";
+        const productsValue = (typeof products !== "undefined" && Array.isArray(products)) ? products : [];
+        const totalProductsValue = typeof totalProducts === "number" ? totalProducts : 0;
+        const productsPerPageValue = typeof productsPerPage === "number" ? productsPerPage : 8;
+        const currentPageValue = typeof currentPage === "number" ? currentPage : 1;
+        const totalPagesValue = typeof totalPages === "number" ? totalPages : 1;
+    %>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="contact-icons">
+            <img src="/images/phone.jpg" alt="Phone">
+            <img src="/images/whatsapp.jpg" alt="WhatsApp">
+        </div>
+
+                <div class="top-right">
+                        <img src="/images/search.jpg" alt="Search">
+                        <h5>PKR</h5>
+                        <img src="/images/account.jpg" alt="Account">
+                        <%
+                          // Count total items in cart
+                          let cartCount = 0;
+                          if (currentUser && req.session && req.session.cart) {
+                            for (let item of req.session.cart) {
+                              cartCount += item.quantity;
+                            }
+                          }
+                        %>
+                        <a href="<%= currentUser ? '/cart' : '/login' %>" style="position: relative; text-decoration: none;">
+                          <img src="/images/cart.jpg" alt="Cart">
+                          <% if(cartCount > 0) { %>
+                            <span style="background: rgb(179, 141, 54); color: white; border-radius: 50%; padding: 2px 6px; font-size: 11px; position: absolute; top: -5px; right: -5px;">
+                              <%= cartCount %>
+                            </span>
+                          <% } %>
+                        </a>
+                        <% if (!currentUser) { %>
+                            <a href="/login" style="margin-left:10px;color:#fff;text-decoration:none;">LOGIN</a>
+                            <a href="/register" style="margin-left:8px;color:#fff;text-decoration:none;">REGISTER</a>
+                        <% } else if (currentUser.role === 'admin') { %>
+                            <span style="margin-left:10px;color:#fff;">Hi, <%= currentUser.name %></span>
+                            <a href="/profile" style="margin-left:10px;color:#fff;text-decoration:none;">MY PROFILE</a>
+                            <a href="/admin/dashboard" style="margin-left:10px; padding: 6px 10px; background: #b38d36; color: #1a1a1a; text-decoration: none; font-size: 12px; font-weight: bold; border-radius: 4px;">ADMIN</a>
+                            <a href="/logout" style="margin-left:8px;color:#b04b4b;text-decoration:none;">LOGOUT</a>
+                        <% } else { %>
+                            <span style="margin-left:10px;color:#fff;">Hi, <%= currentUser.name %></span>
+                            <a href="/profile" style="margin-left:10px;color:#fff;text-decoration:none;">MY PROFILE</a>
+                            <a href="/logout" style="margin-left:8px;color:#b04b4b;text-decoration:none;">LOGOUT</a>
+                        <% } %>
+                </div>
+    </div>
+
+    <% if (successMsg && successMsg.length) { %>
+        <div style="max-width:1200px;margin:16px auto 0;padding:12px 16px;background:#e7f7ea;color:#1f6b2d;border:1px solid #b9e3c1;border-radius:6px;">
+            <%= successMsg[0] %>
+        </div>
+    <% } %>
+    <% if (errorMsg && errorMsg.length) { %>
+        <div style="max-width:1200px;margin:16px auto 0;padding:12px 16px;background:#fdecec;color:#a61d24;border:1px solid #f5b7bb;border-radius:6px;">
+            <%= errorMsg[0] %>
+        </div>
+    <% } %>
+
+    <!-- Header -->
+    <div class="header">
+        <h1 class="logo">LIMELIGHT</h1>
+    </div>
+    <hr color="black">
+
+    <!-- Navbar -->
+    <div class="navbar" id="navbar">
+        <button id="menuBtn" class="menu-btn" type="button" aria-label="Toggle navigation menu" aria-controls="navLinks" aria-expanded="false">☰</button>
+        <div class="nav-links" id="navLinks">
+            <a href="/">HOME</a>
+            <a href="/women">WOMEN</a>
+            <a href="/men">MEN</a>
+            <a href="/girls">GIRLS</a>
+            <a href="/products">ALL PRODUCTS</a>
+        </div>
+    </div>
+
+    <!-- Page Heading -->
+    <div class="page-heading">
+        <h1>ALL PRODUCTS</h1>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <form method="GET" action="/products">
+            <div class="filter-container">
+                <div class="filter-group">
+                    <label for="search">SEARCH</label>
+                    <input type="text" id="search" name="search" placeholder="Product name..." value="<%= searchValue %>">
+                </div>
+
+                <div class="filter-group">
+                    <label for="category">CATEGORY</label>
+                    <select id="category" name="category">
+                        <option value="">All Categories</option>
+                        <% const categoryOptions = (typeof allCategories !== 'undefined' && Array.isArray(allCategories) && allCategories.length)
+                            ? allCategories
+                            : ["Unstitched", "Ready to Wear", "Formals", "Co-ords", "Kurtis", "Men", "Girls", "Bags", "Footwear", "Fragrances"];
+                        categoryOptions.forEach(cat => { %>
+                            <option value="<%= cat %>" <% if(categoryValue === cat) { %>selected<% } %>>
+                                <%= cat %>
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="minPrice">MIN PRICE</label>
+                    <input type="number" id="minPrice" name="minPrice" placeholder="0" value="<%= minPriceValue %>">
+                </div>
+
+                <div class="filter-group">
+                    <label for="maxPrice">MAX PRICE</label>
+                    <input type="number" id="maxPrice" name="maxPrice" placeholder="" value="<%= maxPriceValue %>">
+                </div>
+
+                <div class="filter-group">
+                    <label for="sort">SORT BY</label>
+                    <select id="sort" name="sort">
+                        <option value="newest" <% if(sortValue === 'newest' || sortValue === '') { %>selected<% } %>>Newest</option>
+                        <option value="price_asc" <% if(sortValue === 'price_asc') { %>selected<% } %>>Price: Low to High</option>
+                        <option value="price_desc" <% if(sortValue === 'price_desc') { %>selected<% } %>>Price: High to Low</option>
+                        <option value="rating" <% if(sortValue === 'rating') { %>selected<% } %>>Highest Rated</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="apply-btn">APPLY FILTERS</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Product Count -->
+    <div class="product-count">
+        <% if(totalProductsValue > 0) { %>
+            Showing <%= (currentPageValue - 1) * productsPerPageValue + 1 %> - <%= Math.min(currentPageValue * productsPerPageValue, totalProductsValue) %> of <%= totalProductsValue %> products
+        <% } else { %>
+            No products found
+        <% } %>
+    </div>
+
+    <!-- Product Grid or No Products Message -->
+    <% if(productsValue.length > 0) { %>
+        <div class="product-grid">
+            <% productsValue.forEach(product => { %>
+                <div class="product-card">
+                    <img src="<%= product.image %>" alt="<%= product.name %>">
+                    <h3><%= product.name %></h3>
+                    <p class="price">Rs. <%= product.price.toLocaleString() %></p>
+                    <p class="rating">⭐ <%= product.rating %>/5</p>
+                    <p class="stock"><% if(product.stock > 0) { %>In Stock (<%= product.stock %>)<% } else { %>Out of Stock<% } %></p>
+                    <% if (product.stock > 0) { %>
+                        <form method="POST" action="/cart/add/<%= product._id %>" class="add-to-cart-form">
+                            <button type="submit" class="add-to-cart-btn">ADD TO CART</button>
+                        </form>
+                    <% } else { %>
+                        <button type="button" class="add-to-cart-btn" disabled style="background:#999; cursor:not-allowed;">OUT OF STOCK</button>
+                    <% } %>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <div class="no-products">
+            <p>No products match your criteria. Try adjusting your filters.</p>
+        </div>
+    <% } %>
+
+    <!-- Pagination -->
+    <% if(totalPagesValue > 1) { %>
+        <div class="pagination-container">
+            <div class="pagination">
+                <!-- Previous Button -->
+                <% if(currentPageValue > 1) { %>
+                    <a href="/products?page=<%= currentPageValue - 1 %>&search=<%= searchValue %>&category=<%= categoryValue %>&minPrice=<%= minPriceValue %>&maxPrice=<%= maxPriceValue %>&sort=<%= sortValue %>">PREVIOUS</a>
+                <% } else { %>
+                    <span class="disabled">PREVIOUS</span>
+                <% } %>
+
+                <!-- Page Numbers -->
+                <% 
+                    let startPage = Math.max(1, currentPageValue - 2);
+                    let endPage = Math.min(totalPagesValue, currentPageValue + 2);
+                %>
+
+                <% if(startPage > 1) { %>
+                    <a href="/products?page=1&search=<%= searchValue %>&category=<%= categoryValue %>&minPrice=<%= minPriceValue %>&maxPrice=<%= maxPriceValue %>&sort=<%= sortValue %>">1</a>
+                    <% if(startPage > 2) { %>
+                        <span>...</span>
+                    <% } %>
+                <% } %>
+
+                <% for(let i = startPage; i <= endPage; i++) { %>
+                    <% if(i === currentPageValue) { %>
+                        <span class="active"><%= i %></span>
+                    <% } else { %>
+                        <a href="/products?page=<%= i %>&search=<%= searchValue %>&category=<%= categoryValue %>&minPrice=<%= minPriceValue %>&maxPrice=<%= maxPriceValue %>&sort=<%= sortValue %>"><%= i %></a>
+                    <% } %>
+                <% } %>
+
+                <% if(endPage < totalPagesValue) { %>
+                    <% if(endPage < totalPagesValue - 1) { %>
+                        <span>...</span>
+                    <% } %>
+                    <a href="/products?page=<%= totalPagesValue %>&search=<%= searchValue %>&category=<%= categoryValue %>&minPrice=<%= minPriceValue %>&maxPrice=<%= maxPriceValue %>&sort=<%= sortValue %>"><%= totalPagesValue %></a>
+                <% } %>
+
+                <!-- Next Button -->
+                <% if(currentPageValue < totalPagesValue) { %>
+                    <a href="/products?page=<%= currentPageValue + 1 %>&search=<%= searchValue %>&category=<%= categoryValue %>&minPrice=<%= minPriceValue %>&maxPrice=<%= maxPriceValue %>&sort=<%= sortValue %>">NEXT</a>
+                <% } else { %>
+                    <span class="disabled">NEXT</span>
+                <% } %>
+            </div>
+        </div>
+    <% } %>
+
+    <!-- Footer -->
+    <div class="footer">
+        <h3><b>CUSTOMER CARE</b></h3>
+        <p>Order Tracking</p>
+        <p>Policies</p>
+        <p>FAQ's</p>
+        <p><a href="/contact-us">Contact Us</a></p>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
