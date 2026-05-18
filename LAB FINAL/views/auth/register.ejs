@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Create Account - Limelight</title>
+  <style>
+    body { background: #f3efe5; font-family: Arial, sans-serif; margin:0; }
+    .top { background: #000; color: #b38d36; padding: 12px 20px; }
+    .container { display:flex; align-items:center; justify-content:center; min-height:80vh; }
+    .card { background: white; max-width:450px; width:100%; padding:24px; border-radius:6px; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+    h2 { text-align:center; color:#1a1a1a; letter-spacing:2px; }
+    label { font-size:13px; display:block; margin-top:12px; }
+    input { width:100%; padding:10px; margin-top:6px; border:1px solid #ccc; border-radius:4px; }
+    .btn { margin-top:16px; width:100%; background:#000; color:#fff; padding:12px; border:none; cursor:pointer; font-weight:bold; }
+    .links { text-align:center; margin-top:12px; font-size:13px; }
+    .flash { margin-bottom:12px; color:#b00020; font-weight:bold; }
+  </style>
+</head>
+<body>
+  <!-- Shared store header. -->
+  <div class="top"><h1 style="margin:0;">LIMELIGHT</h1></div>
+  <!-- Registration form with a client-side password match check. -->
+  <div class="container">
+    <div class="card">
+      <h2>Create Account</h2>
+      <!-- Flash message area for validation errors. -->
+      <% if (errorMsg && errorMsg.length) { %>
+        <div class="flash"><%= errorMsg[0] %></div>
+      <% } %>
+      <form method="POST" action="/register" id="registerForm">
+        <label for="name">Full Name</label>
+        <input id="name" name="name" required>
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" minlength="6" required>
+
+        <label for="confirmPassword">Confirm Password</label>
+        <input id="confirmPassword" name="confirmPassword" type="password" minlength="6" required>
+
+        <button class="btn" type="submit">CREATE ACCOUNT</button>
+      </form>
+      <div class="links">Already have an account? <a href="/login">Login</a></div>
+    </div>
+  </div>
+
+  <script>
+    // Prevent the form from submitting when the passwords do not match.
+    document.getElementById('registerForm').addEventListener('submit', function(e){
+      const pw = document.getElementById('password').value;
+      const cpw = document.getElementById('confirmPassword').value;
+      if (pw !== cpw) {
+        e.preventDefault();
+        alert('Passwords do not match');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On Sale Products - Limelight</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Basic grid and card styles (kept simple for beginners) */
+        #product-list { max-width:1200px; margin: 20px auto 40px; padding: 0 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .product-card { text-align:center; transition:transform .2s ease; }
+        .product-card img { width:100%; height:300px; object-fit:cover; border:1px solid #ddd; margin-bottom:12px; }
+        .product-card h3 { font-size:16px; margin-bottom:6px; }
+        .product-card .price { color:#666; margin-bottom:4px; }
+        .product-card .price-old { text-decoration: line-through; color:#999; margin-right:6px; }
+        .product-card .price-sale { color:#b04b4b; font-weight:bold; }
+        .product-card .stock { font-size:12px; color:#999; }
+        .add-to-cart-form { margin-top:10px; }
+        .add-to-cart-btn { width:100%; background:black; color:white; padding:10px; border:none; cursor:pointer; letter-spacing:1px; font-size:12px; font-weight:bold; border-radius:3px; }
+        .add-to-cart-btn:hover { background:#333; }
+        @media (max-width:1024px) { #product-list { grid-template-columns: repeat(3,1fr);} }
+        @media (max-width:768px) { #product-list { grid-template-columns: repeat(2,1fr);} .product-card img { height:200px; } }
+        @media (max-width:480px) { #product-list { grid-template-columns: 1fr; } }
+        /* Simple pagination controls styling */
+        #pagination { text-align:center; margin-bottom:60px; }
+        #pagination button { padding:8px 12px; margin:0 6px; border:1px solid #ddd; background:white; cursor:pointer; }
+        #pagination button:disabled { opacity:0.5; cursor:not-allowed; }
+    </style>
+</head>
+<body>
+        <!-- Top bar with contact icons and account/cart controls. -->
+        <div class="top-bar">
+                <div class="contact-icons">
+                        <img src="/images/phone.jpg" alt="Phone">
+                        <img src="/images/whatsapp.jpg" alt="WhatsApp">
+                </div>
+
+                <div class="top-right">
+                        <img src="/images/search.jpg" alt="Search">
+                        <h5>PKR</h5>
+                        <img src="/images/account.jpg" alt="Account">
+                        <%
+                            let cartCount = 0;
+                            if (currentUser && req.session && req.session.cart) {
+                                for (let item of req.session.cart) {
+                                    cartCount += item.quantity;
+                                }
+                            }
+                        %>
+                        <a href="<%= currentUser ? '/cart' : '/login' %>" style="position: relative; text-decoration: none;">
+                            <img src="/images/cart.jpg" alt="Cart">
+                            <% if(cartCount > 0) { %>
+                                <span style="background: rgb(179, 141, 54); color: white; border-radius: 50%; padding: 2px 6px; font-size: 11px; position: absolute; top: -5px; right: -5px;">
+                                    <%= cartCount %>
+                                </span>
+                            <% } %>
+                        </a>
+                        <% if (!currentUser) { %>
+                                <a href="/login" style="margin-left:10px;color:#fff;text-decoration:none;">LOGIN</a>
+                                <a href="/register" style="margin-left:8px;color:#fff;text-decoration:none;">REGISTER</a>
+                        <% } else if (currentUser.role === 'admin') { %>
+                                <span style="margin-left:10px;color:#fff;">Hi, <%= currentUser.name %></span>
+                                <a href="/profile" style="margin-left:10px;color:#fff;text-decoration:none;">MY PROFILE</a>
+                                <a href="/admin/dashboard" style="margin-left:10px; padding: 6px 10px; background: #b38d36; color: #1a1a1a; text-decoration: none; font-size: 12px; font-weight: bold; border-radius: 4px;">ADMIN</a>
+                                <a href="/logout" style="margin-left:8px;color:#b04b4b;text-decoration:none;">LOGOUT</a>
+                        <% } else { %>
+                                <span style="margin-left:10px;color:#fff;">Hi, <%= currentUser.name %></span>
+                                <a href="/profile" style="margin-left:10px;color:#fff;text-decoration:none;">MY PROFILE</a>
+                                <a href="/logout" style="margin-left:8px;color:#b04b4b;text-decoration:none;">LOGOUT</a>
+                        <% } %>
+                </div>
+        </div>
+
+    <!-- Header / Nav (kept consistent with other pages) -->
+    <div class="header">
+        <h1 class="logo">LIMELIGHT</h1>
+    </div>
+    <hr color="black">
+    <div class="navbar" id="navbar">
+        <button id="menuBtn" class="menu-btn" type="button">☰</button>
+        <div class="nav-links" id="navLinks">
+            <a href="/">HOME</a>
+            <a href="/women">WOMEN</a>
+            <a href="/men">MEN</a>
+            <a href="/girls">GIRLS</a>
+            <a href="/onsale-products">SALE</a>
+            <a href="/products">ALL PRODUCTS</a>
+        </div>
+    </div>
+
+    <!-- Page heading -->
+    <div class="page-heading" style="text-align:center;margin:30px 0;">
+        <h1>ON SALE PRODUCTS</h1>
+    </div>
+
+    <!-- Product list container where each product-card will be rendered -->
+    <div id="product-list">
+        <% if (Array.isArray(products) && products.length > 0) { %>
+            <% products.forEach(function(product) { %>
+                <!-- Single product card (class must be product-card as requested) -->
+                <div class="product-card">
+                    <img src="<%= product.image %>" alt="<%= product.name %>">
+                    <h3><%= product.name %></h3>
+                    <p class="price">
+                        <span class="price-old">Rs. <%= (product.originalPrice || 0).toLocaleString() %></span>
+                        <span class="price-sale">Rs. <%= (product.price || 0).toLocaleString() %></span>
+                    </p>
+                    <p class="stock"><% if (product.stock > 0) { %>In Stock (<%= product.stock %>)<% } else { %>Out of Stock<% } %></p>
+                    <% if (product.stock > 0) { %>
+                        <!-- Add to cart button for in-stock on-sale products -->
+                        <form method="POST" action="/cart/add/<%= product._id %>" class="add-to-cart-form">
+                            <button type="submit" class="add-to-cart-btn">ADD TO CART</button>
+                        </form>
+                    <% } else { %>
+                        <!-- Disabled state when item is out of stock -->
+                        <button type="button" class="add-to-cart-btn" disabled style="background:#999; cursor:not-allowed;">OUT OF STOCK</button>
+                    <% } %>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div style="max-width:1200px;margin:20px auto;padding:40px;text-align:center;color:#666;">No on-sale products available.</div>
+        <% } %>
+    </div>
+
+    <!-- Pagination controls required by the user -->
+    <div id="pagination">
+        <button id="prev-btn">Previous</button>
+        <button id="next-btn">Next</button>
+        <p id="page-info" style="display:inline-block;margin-left:12px;">Page 1 of 1</p>
+    </div>
+
+    <!-- Footer (simple copy of other pages) -->
+    <div class="footer">
+        <h3><b>CUSTOMER CARE</b></h3>
+        <p>Order Tracking</p>
+        <p>Policies</p>
+        <p>FAQ's</p>
+        <p><a href="/contact-us">Contact Us</a></p>
+    </div>
+
+    <!-- Include jQuery from CDN because the page uses jQuery for pagination -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+    // jQuery pagination script with a comment on every important line for beginners
+    $(document).ready(function() {
+        // Select all product cards in the DOM
+        var $cards = $('.product-card'); // all product-card elements
+
+        // Total number of cards
+        var totalCards = $cards.length; // count how many product cards there are
+
+        // Number of cards per page (show 10 per requirements)
+        var pageSize = 10; // how many cards to show on each page
+
+        // Calculate total pages
+        var totalPages = Math.ceil(totalCards / pageSize); // round up to cover remaining items
+
+        // Track current page (starts at 1)
+        var currentPage = 1; // initial page
+
+        // Cache pagination elements for later updates
+        var $prev = $('#prev-btn'); // previous button
+        var $next = $('#next-btn'); // next button
+        var $pageInfo = $('#page-info'); // page info text
+
+        // Function to update UI: hide all cards and show the slice for the given page
+        function showPage(page) {
+            // hide all cards first
+            $cards.hide(); // hide every product card element
+
+            // calculate start and end indices for slice
+            var start = (page - 1) * pageSize; // index of first card to show
+            var end = start + pageSize; // index after last card to show
+
+            // show only the cards for the requested page
+            $cards.slice(start, end).show(); // show the selected range
+
+            // update page info text
+            $pageInfo.text('Page ' + page + ' of ' + (totalPages || 1)); // update the page counter
+
+            // disable previous button on first page
+            if (page <= 1) {
+                $prev.prop('disabled', true); // disable prev when on first page
+            } else {
+                $prev.prop('disabled', false); // enable prev otherwise
+            }
+
+            // disable next button on last page
+            if (page >= totalPages) {
+                $next.prop('disabled', true); // disable next when on last page
+            } else {
+                $next.prop('disabled', false); // enable next otherwise
+            }
+        }
+
+        // Initial setup: hide all cards then show first page
+        showPage(currentPage); // show page 1 on load
+
+        // Next button click handler: increment page and show next slice
+        $next.on('click', function() {
+            // do nothing if already on last page
+            if (currentPage >= totalPages) return; // guard
+            currentPage = currentPage + 1; // move to next page
+            showPage(currentPage); // update view
+        });
+
+        // Previous button click handler: decrement page and show previous slice
+        $prev.on('click', function() {
+            // do nothing if already on first page
+            if (currentPage <= 1) return; // guard
+            currentPage = currentPage - 1; // move to previous page
+            showPage(currentPage); // update view
+        });
+    });
+    </script>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

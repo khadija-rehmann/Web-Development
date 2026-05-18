@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - Limelight</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3efe5;
+            color: #1a1a1a;
+        }
+
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 28px 22px;
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #b38d36;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 14px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar a.active,
+        .sidebar a:hover {
+            background: #b38d36;
+            color: #1a1a1a;
+            font-weight: bold;
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px;
+            background: #fff;
+        }
+
+        .card {
+            max-width: 760px;
+            background: #fff;
+            border: 1px solid #e4dccd;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        h1 {
+            margin: 0 0 18px;
+            font-size: 30px;
+            letter-spacing: 1px;
+        }
+
+        .error {
+            background: #fbe9e9;
+            color: #8f1f1f;
+            border: 1px solid #f1c1c1;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            letter-spacing: 0.4px;
+        }
+
+        input,
+        select {
+            padding: 12px 14px;
+            border: 1px solid #cfc6b8;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        .preview-wrap {
+            margin-bottom: 12px;
+        }
+
+        .preview {
+            width: 90px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            display: block;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 22px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 0.6px;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: #b38d36;
+            color: #1a1a1a;
+        }
+
+        .helper {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .logout-btn {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 14px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            background: #8f1f1f;
+            text-align: center;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #b04b4b;
+        }
+
+        @media (max-width: 900px) {
+            .admin-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: auto;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Default value helper so the edit form keeps the current product data. -->
+    <% const formValue = (field) => (product && product[field] !== undefined ? product[field] : ""); %>
+    <div class="admin-layout">
+        <!-- Admin sidebar navigation. -->
+        <aside class="sidebar">
+            <div class="brand">LIMELIGHT</div>
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/products/new">Add Product</a>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </aside>
+
+        <main class="content">
+            <div class="card">
+                <!-- Edit-product form keeps the existing image unless a replacement is uploaded. -->
+                <h1>EDIT PRODUCT</h1>
+
+                <% if (error) { %>
+                    <div class="error"><%= error %></div>
+                <% } %>
+
+                <form action="/admin/products/update/<%= product._id %>" method="POST" enctype="multipart/form-data">
+                    <!-- Product fields are arranged in a responsive two-column grid. -->
+                    <div class="form-grid">
+                        <div class="field full">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required value="<%= formValue('name') %>">
+                        </div>
+
+                        <div class="field">
+                            <label for="price">Price</label>
+                            <input type="number" id="price" name="price" required min="0" step="0.01" value="<%= formValue('price') %>">
+                        </div>
+
+                        <div class="field">
+                            <label for="category">Category</label>
+                            <select id="category" name="category" required>
+                                <option value="">Select category</option>
+                                <% categories.forEach((category) => { %>
+                                    <option value="<%= category %>" <%= formValue('category') === category ? 'selected' : '' %>><%= category %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="rating">Rating</label>
+                            <input type="number" id="rating" name="rating" required min="0" max="5" step="0.1" value="<%= formValue('rating') %>">
+                        </div>
+
+                        <div class="field">
+                            <label for="stock">Stock</label>
+                            <input type="number" id="stock" name="stock" required min="0" step="1" value="<%= formValue('stock') %>">
+                        </div>
+
+                        <div class="field">
+                            <label for="isOnSale">On Sale?</label>
+                            <select id="isOnSale" name="isOnSale" required>
+                                <option value="false" <%= String(formValue('isOnSale')) === 'false' ? 'selected' : '' %>>No</option>
+                                <option value="true" <%= String(formValue('isOnSale')) === 'true' ? 'selected' : '' %>>Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="field full">
+                            <label>Current Image</label>
+                            <% if (product.image) { %>
+                                <div class="preview-wrap">
+                                    <img class="preview" src="<%= product.image %>" alt="<%= product.name %>">
+                                </div>
+                            <% } %>
+                            <label for="image">Replace Image</label>
+                            <input type="file" id="image" name="image" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+                            <div class="helper">Leave this blank to keep the existing image.</div>
+                        </div>
+                    </div>
+
+                    <!-- Save the update or cancel back to the dashboard. -->
+                    <div class="actions">
+                        <button class="btn btn-primary" type="submit">UPDATE PRODUCT</button>
+                        <a class="btn btn-secondary" href="/admin/dashboard">CANCEL</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

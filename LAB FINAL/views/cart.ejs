@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart - Limelight</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Cart page styling */
+        body {
+            background: #f3efe5;
+            margin: 0;
+        }
+        
+        .cart-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 80px 20px;
+        }
+        
+        /* Page title styling */
+        .cart-title {
+            text-align: center;
+            font-size: 28px;
+            letter-spacing: 2px;
+            margin: 30px 0;
+            color: #1a1a1a;
+        }
+        
+        /* Main cart container */
+        .cart-items-container {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        
+        /* Empty cart message */
+        .empty-cart-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-cart-message h2 {
+            margin-top: 0;
+        }
+        
+        .continue-shopping-link {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            letter-spacing: 1px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        
+        /* Each cart item row */
+        .cart-item-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            background: white;
+        }
+        
+        .cart-item-row:last-child {
+            border-bottom: none;
+        }
+        
+        /* Product image in cart */
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        
+        /* Product details (name, price) */
+        .cart-item-details {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .cart-item-name {
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0 0 5px 0;
+        }
+        
+        .cart-item-price {
+            color: #666;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .cart-item-price .price-old {
+            text-decoration: line-through;
+            color: #999;
+            margin-right: 6px;
+        }
+
+        .cart-item-price .price-sale {
+            color: #b04b4b;
+            font-weight: bold;
+        }
+        
+        /* Quantity display */
+        .cart-item-qty {
+            min-width: 60px;
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+        }
+        
+        /* Item total (price x quantity) */
+        .cart-item-total {
+            min-width: 100px;
+            text-align: right;
+            font-weight: bold;
+            font-size: 14px;
+            color: #1a1a1a;
+        }
+        
+        /* Remove button */
+        .remove-item-btn {
+            background: black;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            border-radius: 3px;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+        
+        .remove-item-btn:hover {
+            background: #333;
+        }
+        
+        /* Cart totals section */
+        .cart-totals {
+            text-align: right;
+            padding: 20px;
+            margin-top: 20px;
+            border-top: 2px solid #ddd;
+        }
+        
+        .cart-total-label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin: 10px 0;
+        }
+        
+        /* Action buttons area */
+        .cart-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        /* Clear cart button */
+        .clear-cart-form {
+            margin: 0;
+        }
+        
+        .clear-cart-btn {
+            background: white;
+            color: black;
+            border: 1px solid black;
+            padding: 12px 30px;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 14px;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        
+        .clear-cart-btn:hover {
+            background: #f5f5f5;
+        }
+        
+        /* Proceed to checkout button */
+        .checkout-btn {
+            background: black;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 4px;
+        }
+        
+        .checkout-btn:hover {
+            background: #333;
+        }
+        
+        /* Responsive design for mobile */
+        @media (max-width: 768px) {
+            .cart-item-row {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .cart-item-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .cart-item-total {
+                width: 100%;
+                text-align: left;
+            }
+            
+            .cart-actions {
+                flex-direction: column;
+            }
+            
+            .clear-cart-btn,
+            .checkout-btn {
+                width: 100%;
+                text-align: center;
+                margin-right: 0;
+            }
+            
+            .cart-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top navigation bar with contact and user menu -->
+    <div class="top-bar">
+        <div class="contact-icons">
+            <img src="/images/phone.jpg" alt="Phone">
+            <img src="/images/whatsapp.jpg" alt="WhatsApp">
+        </div>
+        <div class="top-right">
+            <img src="/images/search.jpg" alt="Search">
+            <h5>PKR</h5>
+            <img src="/images/account.jpg" alt="Account">
+            <img src="/images/cart.jpg" alt="Cart">
+            <% if (!currentUser) { %>
+                <a href="/login" style="margin-left:10px;color:#fff;text-decoration:none;">LOGIN</a>
+                <a href="/register" style="margin-left:8px;color:#fff;text-decoration:none;">REGISTER</a>
+            <% } else if (currentUser.role === 'admin') { %>
+                <span style="margin-left:10px;color:#fff;">Hi, <%= currentUser.name %></span>
+                <a href="/profile" style="margin-left:10px;color:#fff;text-decoration:none;">MY PROFILE</a>
+                <a href="/admin/dashboard" style="margin-left:10px; padding: 6px 10px; background: #b38d36; color: #1a1a1a; text-decoration: none; font-size: 12px; font-weight: bold; border-radius: 4px;">ADMIN</a>
+                <a href="/logout" style="margin-left:8px;color:#b04b4b;text-decoration:none;">LOGOUT</a>
+            <% } else { %>
+                <span style="margin-left:10px;color:#fff;">Hi, <%= currentUser.name %></span>
+                <a href="/profile" style="margin-left:10px;color:#fff;text-decoration:none;">MY PROFILE</a>
+                <a href="/logout" style="margin-left:8px;color:#b04b4b;text-decoration:none;">LOGOUT</a>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Flash messages for success/error -->
+    <% if (successMsg && successMsg.length) { %>
+        <div style="max-width:1200px;margin:16px auto 0;padding:12px 16px;background:#e7f7ea;color:#1f6b2d;border:1px solid #b9e3c1;border-radius:6px;">
+            <%= successMsg[0] %>
+        </div>
+    <% } %>
+    <% if (errorMsg && errorMsg.length) { %>
+        <div style="max-width:1200px;margin:16px auto 0;padding:12px 16px;background:#fdecec;color:#a61d24;border:1px solid #f5b7bb;border-radius:6px;">
+            <%= errorMsg[0] %>
+        </div>
+    <% } %>
+
+    <!-- Header with LIMELIGHT logo -->
+    <div class="header">
+        <h1 class="logo">LIMELIGHT</h1>
+    </div>
+    <hr color="black">
+
+    <!-- Navigation bar -->
+    <div class="navbar" id="navbar">
+        <button id="menuBtn" class="menu-btn" type="button">☰</button>
+        <div class="nav-links" id="navLinks">
+            <a href="/">HOME</a>
+            <a href="/women">WOMEN</a>
+            <a href="/men">MEN</a>
+            <a href="/girls">GIRLS</a>
+            <a href="/onsale-products">SALE</a>
+            <a href="/products">ALL PRODUCTS</a>
+        </div>
+    </div>
+
+    <!-- Main cart content -->
+    <div class="cart-wrapper">
+        <!-- Page title -->
+        <h2 class="cart-title">MY CART</h2>
+        
+        <!-- Cart container -->
+        <div class="cart-items-container">
+            <!-- Show empty cart message if cart is empty -->
+            <% if (!cart || cart.length === 0) { %>
+                <div class="empty-cart-message">
+                    <h2>Your cart is empty.</h2>
+                    <p>Add some products to get started!</p>
+                    <a href="/products" class="continue-shopping-link">CONTINUE SHOPPING</a>
+                </div>
+            
+            <!-- Show cart items if cart has products -->
+            <% } else { %>
+                <!-- Loop through each item in the cart and display it -->
+                <% cart.forEach(function(item) { %>
+                    <div class="cart-item-row">
+                        <!-- Product image -->
+                        <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-image">
+                        
+                        <!-- Product name and price -->
+                        <div class="cart-item-details">
+                            <div class="cart-item-name"><%= item.name %></div>
+                            <div class="cart-item-price">
+                                <% if (item.isOnSale) { %>
+                                    <span class="price-old">Rs. <%= item.originalPrice %></span>
+                                    <span class="price-sale">Rs. <%= item.salePrice %></span>
+                                <% } else { %>
+                                    Rs. <%= item.price %>
+                                <% } %>
+                            </div>
+                        </div>
+                        
+                        <!-- Quantity -->
+                        <div class="cart-item-qty">
+                            Qty: <%= item.quantity %>
+                        </div>
+                        
+                        <!-- Item total (price × quantity) -->
+                        <div class="cart-item-total">
+                            Rs. <%= (item.isOnSale ? item.salePrice : item.price) * item.quantity %>
+                        </div>
+                        
+                        <!-- Remove button - submits to POST /cart/remove/:productId -->
+                        <form method="POST" action="/cart/remove/<%= item.productId %>" style="margin: 0;">
+                            <button type="submit" class="remove-item-btn">REMOVE</button>
+                        </form>
+                    </div>
+                <% }); %>
+                
+                <!-- Cart totals and action buttons -->
+                <div class="cart-totals">
+                    <div class="cart-total-label">
+                        TOTAL: Rs. <%= total %>
+                    </div>
+                    
+                    <!-- Action buttons -->
+                    <div class="cart-actions">
+                        <!-- Clear cart button - shows confirmation popup -->
+                        <form method="POST" action="/cart/clear" class="clear-cart-form">
+                            <button type="submit" class="clear-cart-btn" onclick="return confirm('Are you sure you want to clear your cart?');">CLEAR CART</button>
+                        </form>
+                        
+                        <!-- Proceed to checkout button -->
+                        <a href="/checkout" class="checkout-btn">CHECKOUT</a>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <h3><b>CUSTOMER CARE</b></h3>
+        <p>Order Tracking</p>
+        <p>Policies</p>
+        <p>FAQ's</p>
+        <p><a href="/contact-us">Contact Us</a></p>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
