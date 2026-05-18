@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Limelight</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .profile-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #f3efe5;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .profile-container h2 {
+            text-align: center;
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            font-size: 24px;
+            letter-spacing: 2px;
+        }
+
+        .profile-field {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #d4c5b9;
+        }
+
+        .profile-field:last-child {
+            border-bottom: none;
+        }
+
+        .profile-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .profile-value {
+            font-size: 16px;
+            color: #1a1a1a;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid rgb(179, 141, 54);
+        }
+
+        .account-type {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .account-type.admin {
+            background: rgb(179, 141, 54);
+            color: white;
+        }
+
+        .account-type.user {
+            background: #e8e8e8;
+            color: #1a1a1a;
+        }
+
+        .profile-actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .profile-actions a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back {
+            background: white;
+            color: #1a1a1a;
+            border: 2px solid #1a1a1a;
+        }
+
+        .btn-back:hover {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .btn-admin {
+            background: rgb(179, 141, 54);
+            color: white;
+        }
+
+        .btn-admin:hover {
+            background: #9a6f2b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top bar with account and cart shortcuts. -->
+    <div class="top-bar">
+        <div class="contact-icons">
+            <img src="/images/phone.jpg" alt="Phone">
+            <img src="/images/whatsapp.jpg" alt="WhatsApp">
+        </div>
+
+        <div class="top-right">
+            <img src="/images/search.jpg" alt="Search">
+            <h5>PKR</h5>
+            <img src="/images/account.jpg" alt="Account">
+                        <%
+                            // Count items in the cart so the header badge reflects the current session.
+              let cartCount = 0;
+              if (currentUser && req.session && req.session.cart) {
+                for (let item of req.session.cart) {
+                  cartCount += item.quantity;
+                }
+              }
+            %>
+            <a href="<%= currentUser ? '/cart' : '/login' %>" style="position: relative; text-decoration: none;">
+              <img src="/images/cart.jpg" alt="Cart">
+              <% if(cartCount > 0) { %>
+                <span style="background: rgb(179, 141, 54); color: white; border-radius: 50%; padding: 2px 6px; font-size: 11px; position: absolute; top: -5px; right: -5px;">
+                  <%= cartCount %>
+                </span>
+              <% } %>
+            </a>
+            <% if (currentUser.role === 'admin') { %>
+                <span style="margin-left:10px;color:#fff;">Hi, <%= currentUser.name %></span>
+                <a href="/profile" style="margin-left:10px;color:#fff;text-decoration:none;">MY PROFILE</a>
+                <a href="/admin/dashboard" style="margin-left:10px; padding: 6px 10px; background: #b38d36; color: #1a1a1a; text-decoration: none; font-size: 12px; font-weight: bold; border-radius: 4px;">ADMIN</a>
+                <a href="/logout" style="margin-left:8px;color:#b04b4b;text-decoration:none;">LOGOUT</a>
+            <% } else { %>
+                <span style="margin-left:10px;color:#fff;">Hi, <%= currentUser.name %></span>
+                <a href="/profile" style="margin-left:10px;color:#fff;text-decoration:none;">MY PROFILE</a>
+                <a href="/logout" style="margin-left:8px;color:#b04b4b;text-decoration:none;">LOGOUT</a>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Flash messages shown above the profile card. -->
+    <% if (successMsg && successMsg.length) { %>
+        <div style="max-width:1200px;margin:16px auto 0;padding:12px 16px;background:#e7f7ea;color:#1f6b2d;border:1px solid #b9e3c1;border-radius:6px;">
+            <%= successMsg[0] %>
+        </div>
+    <% } %>
+    <% if (errorMsg && errorMsg.length) { %>
+        <div style="max-width:1200px;margin:16px auto 0;padding:12px 16px;background:#fdecec;color:#a61d24;border:1px solid #f5b7bb;border-radius:6px;">
+            <%= errorMsg[0] %>
+        </div>
+    <% } %>
+
+    <!-- Brand header. -->
+    <div class="header">
+        <h1 class="logo">LIMELIGHT</h1>
+    </div>
+
+    <!-- Profile card with the signed-in user's account details. -->
+    <div class="profile-container">
+        <h2>MY ACCOUNT</h2>
+
+        <div class="profile-field">
+            <div class="profile-label">Full Name</div>
+            <div class="profile-value"><%= currentUser.name %></div>
+        </div>
+
+        <div class="profile-field">
+            <div class="profile-label">Email Address</div>
+            <div class="profile-value"><%= currentUser.email %></div>
+        </div>
+
+        <div class="profile-field">
+            <div class="profile-label">Account Type</div>
+            <div class="profile-value">
+                <% if (currentUser.role === 'admin') { %>
+                    <span class="account-type admin">ADMIN</span>
+                <% } else { %>
+                    <span class="account-type user">DEFAULT USER</span>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a href="/" class="btn-back">← BACK TO HOME</a>
+            <% if (currentUser.role === 'admin') { %>
+                <a href="/admin/dashboard" class="btn-admin">GO TO ADMIN</a>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Footer links. -->
+    <div class="footer">
+        <h3><b>CUSTOMER CARE</b></h3>
+        <p>Order Tracking</p>
+        <p>Policies</p>
+        <p>FAQ's</p>
+        <p><a href="/contact-us">Contact Us</a></p>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

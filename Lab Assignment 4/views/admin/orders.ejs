@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Orders - Limelight</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3efe5;
+            color: #1a1a1a;
+        }
+
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 28px 22px;
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #b38d36;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 14px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar a.active,
+        .sidebar a:hover {
+            background: #b38d36;
+            color: #1a1a1a;
+            font-weight: bold;
+        }
+
+        .home-link {
+            background: #efeae7;
+            color: #1a1a1a;
+        }
+
+        .logout-btn {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 14px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            background: #8f1f1f;
+            text-align: center;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #b04b4b;
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px;
+            background: #fff;
+        }
+
+        .page-title {
+            margin: 0 0 8px;
+            font-size: 30px;
+            letter-spacing: 1px;
+        }
+
+        .order-count {
+            margin: 0 0 20px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .address-block {
+            white-space: pre-line;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .badge-pending { background: #ffc107; color: black; }
+        .badge-processing { background: #17a2b8; color: white; }
+        .badge-shipped { background: #fd7e14; color: white; }
+        .badge-delivered { background: #28a745; color: white; }
+        .badge-cancelled { background: #dc3545; color: white; }
+
+        .status-select {
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            width: 100%;
+            max-width: 150px;
+        }
+
+        .update-btn {
+            background: #b38d36;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .update-btn:hover {
+            background: #9f7a2f;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #1a1a1a;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+            font-size: 14px;
+        }
+
+        tbody tr:nth-child(odd) {
+            background: white;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .empty-state {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 24px;
+            text-align: center;
+            color: #666;
+        }
+
+        @media (max-width: 900px) {
+            .admin-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: auto;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .table-wrapper {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Admin navigation sidebar. -->
+        <aside class="sidebar">
+            <div class="brand">LIMELIGHT</div>
+            <a href="/" class="home-link">Home</a>
+            <a href="/admin/dashboard">Dashboard</a>
+            <a href="/admin/products/new">Add Product</a>
+            <a href="/admin/orders" class="active">Orders</a>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </aside>
+
+        <main class="content">
+            <!-- Orders overview and update controls. -->
+            <h1 class="page-title">ALL ORDERS</h1>
+            <p class="order-count">Total Orders: <%= orders.length %></p>
+
+            <% if (orders && orders.length > 0) { %>
+                <!-- Orders are rendered in a table so status changes are easy to scan. -->
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer Name</th>
+                                <th>Address</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Order Date and Time</th>
+                                <th>Update</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% orders.forEach(order => { %>
+                                <tr>
+                                    <td><%= order.orderId || order._id.toString() %></td>
+                                    <td><strong><%= order.customerName %></strong></td>
+                                    <td>
+                                        <div class="address-block">
+                                            <% if (order.deliveryAddress) { %>
+                                                <%= order.deliveryAddress.name %><br>
+                                                <%= order.deliveryAddress.street %><br>
+                                                <%= order.deliveryAddress.city %>, <%= order.deliveryAddress.postalCode %><br>
+                                                <%= order.deliveryAddress.country %><br>
+                                                <%= order.deliveryAddress.phone %>
+                                            <% } else { %>
+                                                N/A
+                                            <% } %>
+                                        </div>
+                                    </td>
+                                    <td>Rs. <%= order.totalPrice.toLocaleString() %></td>
+                                    <td>
+                                        <% if (order.status === 'Pending') { %>
+                                            <span class="status-badge badge-pending">Pending</span>
+                                        <% } else if (order.status === 'Processing') { %>
+                                            <span class="status-badge badge-processing">Processing</span>
+                                        <% } else if (order.status === 'Shipped') { %>
+                                            <span class="status-badge badge-shipped">Shipped</span>
+                                        <% } else if (order.status === 'Delivered') { %>
+                                            <span class="status-badge badge-delivered">Delivered</span>
+                                        <% } else { %>
+                                            <span class="status-badge badge-cancelled">Cancelled</span>
+                                        <% } %>
+                                    </td>
+                                    <td><%= new Date(order.createdAt).toLocaleString() %></td>
+                                    <td>
+                                        <form method="POST" action="/admin/orders/update/<%= order._id %>">
+                                            <select name="status" class="status-select">
+                                                <option value="Pending" <%= order.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                                                <option value="Processing" <%= order.status === 'Processing' ? 'selected' : '' %>>Processing</option>
+                                                <option value="Shipped" <%= order.status === 'Shipped' ? 'selected' : '' %>>Shipped</option>
+                                                <option value="Delivered" <%= order.status === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+                                                <option value="Cancelled" <%= order.status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+                                            </select>
+                                            <button type="submit" class="update-btn">UPDATE</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } else { %>
+                <div class="empty-state">No orders have been placed yet.</div>
+            <% } %>
+        </main>
+    </div>
+</body>
+</html>

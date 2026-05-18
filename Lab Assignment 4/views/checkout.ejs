@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Limelight</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Checkout page styling */
+        body {
+            background: #f3efe5;
+            margin: 0;
+        }
+        
+        .checkout-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 80px 20px;
+        }
+        
+        /* Page title */
+        .checkout-title {
+            text-align: center;
+            font-size: 28px;
+            letter-spacing: 2px;
+            margin: 30px 0;
+            color: #1a1a1a;
+        }
+        
+        /* Main container */
+        .checkout-container {
+            background: white;
+            padding: 30px;
+            border-radius: 4px;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .address-form {
+            border: 1px solid #e6e0d5;
+            border-radius: 6px;
+            padding: 20px;
+            background: #fcfbf8;
+        }
+
+        .form-heading {
+            margin: 0 0 16px;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        .form-note {
+            margin: 0 0 16px;
+            color: #666;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input {
+            padding: 12px 14px;
+            border: 1px solid #cfc7b8;
+            border-radius: 4px;
+            font-size: 14px;
+            background: #fff;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #b38d36;
+            box-shadow: 0 0 0 3px rgba(179, 141, 54, 0.15);
+        }
+
+        .checkout-summary {
+            border: 1px solid #e6e0d5;
+            border-radius: 6px;
+            padding: 20px;
+            background: #fff;
+        }
+        
+        /* Back button */
+        .back-button {
+            display: inline-block;
+            background: #b38d36;
+            color: #1a1a1a;
+            text-decoration: none;
+            padding: 8px 16px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .back-button:hover {
+            background: #a67c2a;
+        }
+        
+        /* Order summary heading */
+        .order-summary-heading {
+            font-weight: bold;
+            font-size: 16px;
+            margin: 20px 0 15px 0;
+            color: #1a1a1a;
+        }
+        
+        /* Each order item */
+        .checkout-item {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            padding: 12px;
+            margin: 10px 0;
+            background: #f9f9f9;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+        
+        /* Product image in checkout */
+        .checkout-item-image {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+        
+        /* Product details */
+        .checkout-item-details {
+            flex: 1;
+        }
+        
+        .checkout-item-name {
+            font-weight: bold;
+            font-size: 14px;
+            margin: 0 0 3px 0;
+        }
+        
+        .checkout-item-price {
+            color: #666;
+            font-size: 13px;
+            margin: 0;
+        }
+        
+        /* Item total */
+        .checkout-item-total {
+            text-align: right;
+            font-weight: bold;
+            font-size: 14px;
+            color: #1a1a1a;
+            min-width: 100px;
+        }
+        
+        /* Empty cart message */
+        .empty-checkout-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+        
+        .empty-checkout-message h3 {
+            margin: 0 0 15px 0;
+        }
+        
+        .empty-checkout-message a {
+            display: inline-block;
+            background: #1a1a1a;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        /* Order total section */
+        .order-total-section {
+            border-top: 2px solid #ddd;
+            margin-top: 20px;
+            padding-top: 15px;
+            text-align: right;
+        }
+        
+        .order-total-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .order-total-amount {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin: 10px 0 20px 0;
+        }
+        
+        /* Confirm order button */
+        .confirm-order-form {
+            margin: 0;
+        }
+        
+        .confirm-order-btn {
+            width: 100%;
+            background: black;
+            color: white;
+            padding: 14px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        
+        .confirm-order-btn:hover {
+            background: #333;
+        }
+
+        .checkout-summary .order-total-section {
+            text-align: left;
+        }
+
+        .customer-prefill {
+            color: #666;
+            font-size: 13px;
+            margin: -6px 0 14px;
+        }
+
+        .form-error {
+            margin: 0 0 16px;
+            padding: 12px 14px;
+            background: #fdecec;
+            color: #a61d24;
+            border: 1px solid #f5b7bb;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-item {
+                flex-wrap: wrap;
+            }
+            
+            .checkout-item-image {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .checkout-item-total {
+                width: 100%;
+                text-align: left;
+                margin-top: 5px;
+            }
+            
+            .checkout-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top navigation bar with cart/account controls. -->
+    <div class="top-bar">
+        <div class="contact-icons">
+            <img src="/images/phone.jpg" alt="Phone">
+            <img src="/images/whatsapp.jpg" alt="WhatsApp">
+        </div>
+        <div class="top-right">
+            <img src="/images/search.jpg" alt="Search">
+            <h5>PKR</h5>
+            <img src="/images/account.jpg" alt="Account">
+            <img src="/images/cart.jpg" alt="Cart">
+            <% if (!currentUser) { %>
+                <a href="/login" style="margin-left:10px;color:#fff;text-decoration:none;">LOGIN</a>
+                <a href="/register" style="margin-left:8px;color:#fff;text-decoration:none;">REGISTER</a>
+            <% } else if (currentUser.role === 'admin') { %>
+                <span style="margin-left:10px;color:#fff;">Hi, <%= currentUser.name %></span>
+                <a href="/profile" style="margin-left:10px;color:#fff;text-decoration:none;">MY PROFILE</a>
+                <a href="/admin/dashboard" style="margin-left:10px; padding: 6px 10px; background: #b38d36; color: #1a1a1a; text-decoration: none; font-size: 12px; font-weight: bold; border-radius: 4px;">ADMIN</a>
+                <a href="/logout" style="margin-left:8px;color:#b04b4b;text-decoration:none;">LOGOUT</a>
+            <% } else { %>
+                <span style="margin-left:10px;color:#fff;">Hi, <%= currentUser.name %></span>
+                <a href="/profile" style="margin-left:10px;color:#fff;text-decoration:none;">MY PROFILE</a>
+                <a href="/logout" style="margin-left:8px;color:#b04b4b;text-decoration:none;">LOGOUT</a>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Flash messages for validation or order-state feedback. -->
+    <% if (successMsg && successMsg.length) { %>
+        <div style="max-width:1200px;margin:16px auto 0;padding:12px 16px;background:#e7f7ea;color:#1f6b2d;border:1px solid #b9e3c1;border-radius:6px;">
+            <%= successMsg[0] %>
+        </div>
+    <% } %>
+    <% if (errorMsg && errorMsg.length) { %>
+        <div style="max-width:1200px;margin:16px auto 0;padding:12px 16px;background:#fdecec;color:#a61d24;border:1px solid #f5b7bb;border-radius:6px;">
+            <%= errorMsg[0] %>
+        </div>
+    <% } %>
+
+    <!-- Brand header. -->
+    <div class="header">
+        <h1 class="logo">LIMELIGHT</h1>
+    </div>
+    <hr color="black">
+
+    <!-- Main navigation. -->
+    <div class="navbar" id="navbar">
+        <button id="menuBtn" class="menu-btn" type="button">☰</button>
+        <div class="nav-links" id="navLinks">
+            <a href="/">HOME</a>
+            <a href="/women">WOMEN</a>
+            <a href="/men">MEN</a>
+            <a href="/girls">GIRLS</a>
+            <a href="/products">ALL PRODUCTS</a>
+        </div>
+    </div>
+
+    <!-- Checkout content: delivery form on the left and order summary on the right. -->
+    <div class="checkout-wrapper">
+        <!-- Page title -->
+        <h2 class="checkout-title">CHECKOUT</h2>
+        
+        <div class="checkout-container">
+            <!-- Back to cart button -->
+            <a href="/cart" class="back-button">← BACK TO CART</a>
+
+            <!-- Only render checkout details when items exist in the cart. -->
+            <% if (cart && cart.length > 0) { %>
+                <div class="checkout-grid">
+                    <div class="address-form">
+                        <!-- Address form posts to the order confirmation route. -->
+                        <h3 class="form-heading">Delivery Address</h3>
+                        <p class="form-note">Please fill in all fields so we can deliver your order.</p>
+                        <p class="customer-prefill">Order will be placed for <strong><%= currentUser ? currentUser.name : 'you' %></strong>.</p>
+
+                        <% if (errorMsg && errorMsg.length) { %>
+                            <div class="form-error"><%= errorMsg[0] %></div>
+                        <% } %>
+
+                        <form method="POST" action="/checkout/confirm" class="confirm-order-form">
+                            <div class="form-row">
+                                <div class="form-group full-width">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" id="name" name="name" value="<%= currentUser ? currentUser.name : '' %>" required>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="street">Street Address</label>
+                                    <input type="text" id="street" name="street" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" name="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="postalCode">Postal Code</label>
+                                    <input type="text" id="postalCode" name="postalCode" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="text" id="phone" name="phone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <input type="text" id="country" name="country" value="Pakistan" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="confirm-order-btn">PLACE ORDER</button>
+                        </form>
+                    </div>
+
+                    <!-- Order summary shows each cart line item and the total. -->
+                    <div class="checkout-summary">
+                        <div class="order-summary-heading">ORDER SUMMARY</div>
+
+                        <% cart.forEach(function(item) { %>
+                            <div class="checkout-item">
+                                <img src="<%= item.image %>" alt="<%= item.name %>" class="checkout-item-image">
+
+                                <div class="checkout-item-details">
+                                    <div class="checkout-item-name"><%= item.name %></div>
+                                    <div class="checkout-item-price">
+                                        Rs. <%= item.price %> x <%= item.quantity %>
+                                    </div>
+                                </div>
+
+                                <div class="checkout-item-total">
+                                    Rs. <%= item.price * item.quantity %>
+                                </div>
+                            </div>
+                        <% }); %>
+
+                        <div class="order-total-section">
+                            <div class="order-total-label">TOTAL AMOUNT:</div>
+                            <div class="order-total-amount">Rs. <%= total %></div>
+                        </div>
+                    </div>
+                </div>
+
+            <% } else { %>
+                <div class="empty-checkout-message">
+                    <h3>Your cart is empty.</h3>
+                    <p>Please add items to your cart before proceeding to checkout.</p>
+                    <a href="/products">CONTINUE SHOPPING</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Footer links. -->
+    <div class="footer">
+        <h3><b>CUSTOMER CARE</b></h3>
+        <p>Order Tracking</p>
+        <p>Policies</p>
+        <p>FAQ's</p>
+        <p><a href="/contact-us">Contact Us</a></p>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
